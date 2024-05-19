@@ -1,10 +1,19 @@
 import * as constant from './constants.js' 
 import * as component from './component.js'
 import {verify,getCart,addToCart} from './module.mjs'
-window.onload = await verify();
+const verified = await verify();
 
 //load nav bar on top
-document.getElementsByTagName('nav')[0].innerHTML=component.nav('detail.html',await getCart(true))
+let navBar = document.getElementsByTagName('nav')[0]
+navBar.innerHTML=component.nav('detail.html',await getCart(true))
+if (verified){
+  navBar.appendChild(component.cartModal())
+  let cart_modal_list =document.getElementById('cart-modal-list')
+  let cart_item = await getCart(false)
+  for (let x of cart_item){
+    cart_modal_list.appendChild(component.cartItem(x))
+  }
+}
 
 // display products
 document.getElementById("product-detail").innerHTML = component.ProductDetail(localStorage.getItem('product'))
@@ -52,9 +61,15 @@ document.getElementById('form-search').addEventListener('submit', async function
 document.body.addEventListener('click', async function(event){
   if (event.target.classList.contains('add-to-cart')){
     event.preventDefault();
-    let product_id = event.target.getAttribute('id')
+    let product_id = event.target.getAttribute('data-product-id')
     let quantity = document.getElementById('inputQuantity').value
-    await addToCart(product_id,quantity)
+    if (quantity){
+      await addToCart(product_id,quantity)
+    }
+    else{
+      await addToCart(product_id,1)
+    }
+    
   }
 });
 

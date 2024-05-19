@@ -6,13 +6,11 @@ export function card(element){
       <!-- Sale badge-->
       <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
       <!-- Product image-->
-      <div style = "height:300px;">
-      <img class="card-img-top" src="${element.image_url}" alt="..." style="{  width: 100%;
-        height: 100%;
-        object-position: center;}"/>
+      <div style="%">
+      <img class="card-img-top" src="${element.image_url}" alt="..." style="object-fit:cover;overflow:hidden;height:250px"/>
       </div>
       <!-- Product details-->
-      <div class="card-body p-4">
+      <div class="card-body p-4" style="height:40%">
           <div class="text-center">
               <!-- Product name-->
               <h5 class="fw-bolder">${element.name}</h5>
@@ -96,17 +94,17 @@ export function ProductDetail(element){
         <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
         <div class="d-flex">
             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-            <button id = "${element.id}"class="add-to-cart btn btn-outline-dark flex-shrink-0" type="button">
+            <a  href="#" data-product-id = "${element.id}" id = "${element.id}"class="add-to-cart btn btn-outline-dark flex-shrink-0" type="button">
                 <i class="bi-cart-fill me-1"></i>
                 Add to cart
-            </button>
+            </a>
         </div>
     </div>`
     return product_detail
 }
 
-export function cartModal(cart_item){
-    console.log(cart_item)
+export function cartModal(){
+    // console.log(cart_item)
     let modal_element = document.createElement('div')
     let modal = `<div class="modal fade" id="cartModal"  role="dialog" aria-labelledby="cartModalLabel" >
     <div class="modal-dialog" role="document">
@@ -134,8 +132,11 @@ export function cartModal(cart_item){
 export function cartItem(cart_item){
     let cart_item_element = document.createElement('div')
     let item= `<li class="list-group-item d-flex justify-content-between align-items-center">
-      ${cart_item.product.name}
-      <span class="badge badge-primary badge-pill">${cart_item.quantity}</span>
+    <div>
+      <img src ="${cart_item.product.image_url}" height="10%" width="10%"><span class = "mx-2">${cart_item.product.name}</sapn>
+      </div>
+      <span class="badge bg-dark badge-pill">${cart_item.quantity}</span>
+    
     </li>`
     cart_item_element.innerHTML = item
     return cart_item_element.firstChild

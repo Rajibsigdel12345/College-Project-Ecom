@@ -1,18 +1,23 @@
 import * as constant from './constants.js' 
 import * as component from './component.js'
 import {verify,setLocal,getCart,addToCart} from './module.mjs'
-window.onload = await verify();
-window.onload = DisplayProduct();
+const verified = await verify()
+await DisplayProduct()
+// window.onload = await verify();
+// window.onload = DisplayProduct();
 let page = 1;
 //load nav bar on top
 let navBar=document.getElementsByTagName('nav')[0]
 navBar.innerHTML=component.nav('index.html',await getCart(true))
-navBar.appendChild(component.cartModal(await getCart(false)))
-let cart_modal_list =document.getElementById('cart-modal-list')
-let cart_item = await getCart(false)
-for (let x of cart_item){
-  cart_modal_list.appendChild(component.cartItem(x))
+if (verified){
+  navBar.appendChild(component.cartModal())
+  let cart_modal_list =document.getElementById('cart-modal-list')
+  let cart_item = await getCart(false)
+  for (let x of cart_item){
+    cart_modal_list.appendChild(component.cartItem(x))
+  }
 }
+
 // display products
 
 async function DisplayProduct(page=1){
