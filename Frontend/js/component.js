@@ -157,7 +157,7 @@ export function checkout(cart_item) {
   </div>
   <div class="flex-grow-1 align-self-center overflow-hidden">
   <div>
-  <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">${cart_item.product.name}</a></h5>
+  <h5 class="text-truncate font-size-18"><a href="#" data-product-id="${cart_item.product.id}" class="text-dark product-name">${cart_item.product.name}</a></h5>
   <p class="text-muted mb-0">
   <i class="bx bxs-star text-warning"></i>
   <i class="bx bxs-star text-warning"></i>
@@ -171,8 +171,8 @@ export function checkout(cart_item) {
   <div class="flex-shrink-0 ms-2">
   <ul class="list-inline mb-0 font-size-16">
   <li class="list-inline-item">
-  <a data-product-id = "${cart_item.product.id}" href="" class="text-muted px-1 remove-item">
-  <i class="bi bi-trash"></i>
+  <a  href="#" class="text-muted px-1">
+  <i data-product-id = "${cart_item.id}" class="bi bi-trash remove-item"></i>
   </a>
   </li>
   </ul>
@@ -210,7 +210,7 @@ export function checkout(cart_item) {
   return checkout_element.firstChild
 }
 
-export function orderSummary(cart_item) {
+export function orderSummary(cart_item = null) {
   let order_summary = document.createElement('div')
   let total_amount = 0
   for (let x of cart_item) {

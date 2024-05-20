@@ -101,7 +101,6 @@ document.body.addEventListener('click', async function (event) {
   }
 })
 
-
 // document.querySelectorAll('.view-item').forEach(button => {
 //   button.addEventListener('click', async function (event) {
 //     event.preventDefault();
@@ -120,7 +119,6 @@ document.body.addEventListener('click', async function (event) {
 // })
 
 document.body.addEventListener('click', async function (event) {
-
   if (event.target.classList.contains('view-item')) {
     event.preventDefault();
     let product_id = event.target.getAttribute('data-product-id').toString()
@@ -133,8 +131,6 @@ document.body.addEventListener('click', async function (event) {
     const product_data = await response.json()
     setLocal('product', product_data)
     window.location.href = "detail.html";
-
-
   }
 }
 );
