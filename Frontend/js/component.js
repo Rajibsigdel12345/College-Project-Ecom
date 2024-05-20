@@ -1,6 +1,6 @@
 import * as constant from './constants.js'
 
-export function card(element){
+export function card(element) {
   let product = ` <div class="col mb-5">
   <div class="card h-100">
       <!-- Sale badge-->
@@ -23,7 +23,7 @@ export function card(element){
                   <div class="bi-star"></div>
               </div>
               <!-- Product price-->
-              <span class="text-muted text-decoration-line-through">NRs ${element.price+100}</span>
+              <span class="text-muted text-decoration-line-through">NRs ${element.price + 100}</span>
               ${element.price}
           </div>
       </div>
@@ -31,21 +31,21 @@ export function card(element){
       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
           <div class="text-center">
           <span class= "product-id" style = "display:none">${element.id}</span>
-          <a data-product-id = "${element.id}" class="view-item btn btn-outline-dark mt-auto" href="#">View</a>
-          <a data-product-id = "${element.id}" class="add-to-cart btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+          <button data-product-id = "${element.id}" class="view-item btn btn-outline-dark my-1" >View</button>
+          <button data-product-id = "${element.id}" class="add-to-cart btn btn-outline-dark my-1">Add to cart</button>
           </div>
       </div>
       </div>
   </div>
 </div>`
-return product
+  return product
 }
 
-export function nav(template ,cart_item){
-    sessionStorage.setItem('template',template)
-    const username=sessionStorage.getItem('username')
-    const access_token =constant.getCookie('access_token')
-  let navBar=`<div class="container px-4 px-lg-5">
+export function nav(template, cart_item) {
+  sessionStorage.setItem('template', template)
+  const username = sessionStorage.getItem('username')
+  const access_token = constant.getCookie('access_token')
+  let navBar = `<div class="container px-4 px-lg-5">
   <a class="navbar-brand" href="index.html">Start Bootstrap</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -73,22 +73,22 @@ export function nav(template ,cart_item){
             </form>
             
       </div>
-      <a href="login.html" class="btn btn-outline-dark mx-2" type="submit" style = "display:${access_token&&username ? 'none' : 'inline'}">Login</a>
-      <span class = "mx-2" style = "display:${access_token&&username ? 'inline' : 'none'}">Hello ${username} !</span>
-        <a  id = "logout" href="index.html" class="btn btn-outline-dark mx-2" type="submit" style = "display:${access_token&&username ? 'inline' : 'none'}">Logout</a>
+      <a href="login.html" class="btn btn-outline-dark m-2" type="submit" style = "display:${access_token && username ? 'none' : 'inline'}">Login</a>
+      <span class = "m-2" style = "display:${access_token && username ? 'inline' : 'none'}">Hello ${username} !</span>
+        <a  id = "logout" href="index.html" class="btn btn-outline-dark m-2" type="submit" style = "display:${access_token && username ? 'inline' : 'none'}">Logout</a>
   </div>
 </div>`
   return navBar
 }
 
-export function ProductDetail(element){
-    element = JSON.parse(element)
-    let product_detail = `<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${element.image_url}" alt="..." /></div>
+export function ProductDetail(element) {
+  element = JSON.parse(element)
+  let product_detail = `<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="${element.image_url}" alt="..." /></div>
     <div class="col-md-6">
         <div class="small mb-1">${element.batch_id}:${element.product_id}</div>
         <h1 class="display-5 fw-bolder">${element.name}</h1>
         <div class="fs-5 mb-5">
-            <span class="text-decoration-line-through">NRs${element.price+100}</span>
+            <span class="text-decoration-line-through">NRs${element.price + 100}</span>
             <span>NRs${element.price}</span>
         </div>
         <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
@@ -100,13 +100,13 @@ export function ProductDetail(element){
             </a>
         </div>
     </div>`
-    return product_detail
+  return product_detail
 }
 
-export function cartModal(){
-    // console.log(cart_item)
-    let modal_element = document.createElement('div')
-    let modal = `<div class="modal fade" id="cartModal"  role="dialog" aria-labelledby="cartModalLabel" >
+export function cartModal() {
+  // console.log(cart_item)
+  let modal_element = document.createElement('div')
+  let modal = `<div class="modal fade" id="cartModal"  role="dialog" aria-labelledby="cartModalLabel" >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -121,23 +121,139 @@ export function cartModal(){
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <a href = "checkout.html" type="button" class="btn btn-primary">Check Out</a>
         </div>
       </div>
     </div>
   </div>`
-    modal_element.innerHTML = modal
+  modal_element.innerHTML = modal
   return modal_element.firstChild
 }
-export function cartItem(cart_item){
-    let cart_item_element = document.createElement('div')
-    let item= `<li class="list-group-item d-flex justify-content-between align-items-center">
+export function cartItem(cart_item) {
+  let cart_item_element = document.createElement('div')
+  let item = `<li class="list-group-item d-flex justify-content-between align-items-center">
     <div>
       <img src ="${cart_item.product.image_url}" height="10%" width="10%"><span class = "mx-2">${cart_item.product.name}</sapn>
       </div>
       <span class="badge bg-dark badge-pill">${cart_item.quantity}</span>
     
     </li>`
-    cart_item_element.innerHTML = item
-    return cart_item_element.firstChild
+  cart_item_element.innerHTML = item
+  return cart_item_element.firstChild
+}
+
+export function checkout(cart_item) {
+  const product_quantity = cart_item.product.quantity
+  let options = '';
+  for (let i = 1; i <= product_quantity; i++) {
+    options += `<option value="${i}" ${i === cart_item.quantity ? 'selected' : ''}>${i}</option>`;
+  }
+  let checkout_element = document.createElement('div')
+  let checkout_item = `<div class="card border shadow-none">
+  <div class="card-body">
+  <div class="d-flex align-items-start border-bottom pb-3">
+  <div class="me-4">
+  <img src="${cart_item.product.image_url}"style="object-fit:cover;" alt class="avatar-lg rounded">
+  </div>
+  <div class="flex-grow-1 align-self-center overflow-hidden">
+  <div>
+  <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">${cart_item.product.name}</a></h5>
+  <p class="text-muted mb-0">
+  <i class="bx bxs-star text-warning"></i>
+  <i class="bx bxs-star text-warning"></i>
+  <i class="bx bxs-star text-warning"></i>
+  <i class="bx bxs-star text-warning"></i>
+  <i class="bx bxs-star-half text-warning"></i>
+  </p>
+  <p class="mb-0 mt-1">Color : <span class="fw-medium">Gray</span></p>
+  </div>
+  </div>
+  <div class="flex-shrink-0 ms-2">
+  <ul class="list-inline mb-0 font-size-16">
+  <li class="list-inline-item">
+  <a data-product-id = "${cart_item.product.id}" href="" class="text-muted px-1 remove-item">
+  <i class="bi bi-trash"></i>
+  </a>
+  </li>
+  </ul>
+  </div>
+  </div>
+  <div>
+  <div class="row">
+  <div class="col-md-4">
+  <div class="mt-3">
+  <p class="text-muted mb-2">Price</p>
+  <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del class="font-size-16 fw-normal">Nrs ${cart_item.product.price + 100}</del></span>Nrs ${cart_item.product.price}</h5>
+  </div>
+  </div>
+  <div class="col-md-5">
+  <div class="mt-3">
+  <p class="text-muted mb-2">Quantity</p>
+  <div class="d-inline-flex">
+  <select class="form-select form-select-sm w-xl">
+  ${options}
+  </select>
+  </div>
+  </div>
+  </div>
+  <div class="col-md-3">
+  <div class="mt-3">
+  <p class="text-muted mb-2">Total</p>
+  <h5>Nrs ${cart_item.quantity * cart_item.product.price}</h5>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>`
+  checkout_element.innerHTML = checkout_item
+  return checkout_element.firstChild
+}
+
+export function orderSummary(cart_item) {
+  let order_summary = document.createElement('div')
+  let total_amount = 0
+  for (let x of cart_item) {
+    total_amount += x.quantity * x.product.price
+  }
+  let vat = Number((0.13 * total_amount).toFixed(2))
+  let summary = `<div class="mt-5 mt-lg-0">
+  <div class="card border shadow-none">
+      <div class="card-header bg-transparent border-bottom py-3 px-4">
+          <h5 class="font-size-16 mb-0">Order Summary
+          </h5>
+      </div>
+  <div class="card-body p-4 pt-2">
+      <div class="table-responsive">
+          <table class="table mb-0">
+              <tbody>
+                  <tr>
+                      <td>Sub Total :</td>
+                      <td class="text-end">Nrs ${total_amount}</td>
+                  </tr>
+                  <tr>
+                      <td>Discount : </td>
+                      <td class="text-end">- $ 78</td>
+                  </tr>
+                  <tr>
+                      <td>Shipping Charge :</td>
+                      <td class="text-end">$ 25</td>
+                  </tr>
+                  <tr>
+                      <td>Estimated Tax : </td>
+                      <td class="text-end">Nrs ${vat} </td>
+                  </tr>
+                  <tr class="bg-light">
+                      <th>Total :</th>
+                      <td class="text-end"><span class="fw-bold">Nrs ${total_amount + vat}</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+  </div>
+</div>`
+  order_summary.innerHTML = summary
+  return order_summary.firstChild
 }

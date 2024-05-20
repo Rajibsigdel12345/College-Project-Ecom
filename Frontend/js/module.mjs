@@ -100,6 +100,7 @@ export async function addToCart(product_id,quantity=1){
     }
     const data = await response.json();
     console.log(data)
+    // event.preventDefault();
     // alert("Product added to cart")
   }
   catch (error) {
