@@ -61,3 +61,36 @@ document.body.addEventListener('click', async function (event) {
   }
 })
 
+document.getElementById('checkout').addEventListener('click', async function (event) {
+  event.preventDefault();
+  let response = await fetch(constant.CHECK_OUT_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + constant.getCookie('access_token')
+    }
+  })
+  console.log(response)
+  if (response.status == 200) {
+    alert("Order placed successfully")
+    window.location.replace("index.html");
+  }
+  else if (response.status == 400 || response.status == 500) {
+    response.text().then(text => {
+      alert(text)
+    })
+    console.log(response.statusText,)
+    throw new Error(response.statusText);
+  }
+  else {
+    alert("There was a problem with your fetch request: " + response.statusText);
+  }
+})
+
+document.getElementById('logout').addEventListener('click', function (event) {
+  event.preventDefault();
+  // localStorage.clear()
+  sessionStorage.clear()
+  document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  window.location.href = "index.html";
+});

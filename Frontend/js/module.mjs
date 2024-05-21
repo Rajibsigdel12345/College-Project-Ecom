@@ -1,82 +1,83 @@
 import * as constant from './constants.js';
-export async  function verify() {
+export async function verify() {
   let token = constant.getCookie('access_token')
   if (token) {
-   try{ 
-    const response = await fetch(constant.VERIFY_API, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
+    try {
+      const response = await fetch(constant.VERIFY_API, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (response.ok) {
+        const userData = await response.json();
+        sessionStorage.setItem('username', userData.username)
+        sessionStorage.setItem('user_id', userData.user_id) // Store the username in session storage
+        constant.setCookie('exp', userData.exp, userData.exp) // Store the username in session storage
+        constant.setCookie('iat', userData.iat, userData.exp) // Store the username in local storage
+        return true;
       }
-    })
-    if (response.ok) {
-    const userData = await response.json();
-    sessionStorage.setItem('username',userData.username)
-    sessionStorage.setItem('user_id',userData.user_id) // Store the username in session storage
-    constant.setCookie('exp',userData.exp,userData.exp) // Store the username in session storage
-    constant.setCookie('iat',userData.iat,userData.exp) // Store the username in local storage
-    return true;
+      else if (response.status == 401) {
+        sessionStorage.removeItem('username')
+        sessionStorage.removeItem('user_id')
+        return false;
+
+      }
+    } catch (error) {
+      alert("verify function Error: " + error);
+    }
   }
-  else if (response.status==401){
-    sessionStorage.removeItem('username')
-    sessionStorage.removeItem('user_id')
-    return false;
-  
-  }
-} catch (error) {
-  alert("verify function Error: "+ error);
-}
-}
 }
 
-export function setLocal(key,kwargs){
- localStorage.setItem(key,JSON.stringify(kwargs))
+export function setLocal(key, kwargs) {
+  localStorage.setItem(key, JSON.stringify(kwargs))
 }
 
-export async function getCart(count=true){
+export async function getCart(count = true) {
   try {
     const response = await fetch(constant.CART_API, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+constant.getCookie('access_token')
-      
-}});
-  if (response.status==400 || response.status==500) {
-    console.log(response.statusText,response.text())
-    throw new Error(response.statusText);
-  }
-  else if (response.status==401) {
-    // window.location.replace("login.html");
-    return 0;
-  }
-  const data = await response.json();
-  if (count){
-    let quantity=0;
-      data[0].cart_item.forEach(item => {
-      quantity+=item.quantity;
+        'Authorization': 'Bearer ' + constant.getCookie('access_token')
+
+      }
+    });
+    if (response.status == 400 || response.status == 500) {
+      console.log(response.statusText, response.text())
+      throw new Error(response.statusText);
     }
-    );
-    return quantity
-  }
-  else{
-    return data[0].cart_item;
-  }
-  
+    else if (response.status == 401) {
+      // window.location.replace("login.html");
+      return 0;
+    }
+    const data = await response.json();
+    if (count) {
+      let quantity = 0;
+      data[0].cart_item.forEach(item => {
+        quantity += item.quantity;
+      }
+      );
+      return quantity
+    }
+    else {
+      return data[0].cart_item;
+    }
+
   }
   catch (error) {
-    alert("getCart function Error: "+ error);
+    alert("getCart function Error: " + error);
   }
 }
 
-export async function addToCart(product_id,quantity=1){
+export async function addToCart(product_id, quantity = 1) {
   try {
     const response = await fetch(constant.CART_API, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+constant.getCookie('access_token')
+        'Authorization': 'Bearer ' + constant.getCookie('access_token')
       },
       body: JSON.stringify({
         cart: [{
@@ -86,7 +87,7 @@ export async function addToCart(product_id,quantity=1){
         }]
       })
     });
-    if (response.status==400 || response.status==500) {
+    if (response.status == 400 || response.status == 500) {
       response.text().then(text => {
         alert(text)
       }
@@ -94,7 +95,7 @@ export async function addToCart(product_id,quantity=1){
       console.log(response.statusText,)
       throw new Error(response.statusText);
     }
-    else if (response.status==401) {
+    else if (response.status == 401) {
       window.location.replace("login.html");
       throw new Error(response.statusText);
     }
@@ -104,6 +105,29 @@ export async function addToCart(product_id,quantity=1){
     // alert("Product added to cart")
   }
   catch (error) {
-    alert("There was a problem with your fetch request: "+ error);
+    alert("There was a problem with your fetch request: " + error);
+  }
+}
+
+export async function checkOut() {
+  try {
+    const response = await fetch(constant.CHECK_OUT_API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + constant.getCookie('access_token')
+      }
+    });
+    if (response.status == 400 || response.status == 500) {
+      console.log(response.statusText)
+      throw new Error(response.statusText);
+    }
+    else if (response.status == 401) {
+      window.location.replace("login.html");
+      throw new Error(response.statusText);
+    }
+  }
+  catch (error) {
+    alert("There was a problem with your fetch request: " + error);
   }
 }

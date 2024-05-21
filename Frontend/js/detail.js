@@ -1,16 +1,16 @@
-import * as constant from './constants.js' 
+import * as constant from './constants.js'
 import * as component from './component.js'
-import {verify,getCart,addToCart} from './module.mjs'
+import { verify, getCart, addToCart } from './module.mjs'
 const verified = await verify();
 
 //load nav bar on top
 let navBar = document.getElementsByTagName('nav')[0]
-navBar.innerHTML=component.nav('detail.html',await getCart(true))
-if (verified){
+navBar.innerHTML = component.nav('detail.html', await getCart(true))
+if (verified) {
   navBar.appendChild(component.cartModal())
-  let cart_modal_list =document.getElementById('cart-modal-list')
+  let cart_modal_list = document.getElementById('cart-modal-list')
   let cart_item = await getCart(false)
-  for (let x of cart_item){
+  for (let x of cart_item) {
     cart_modal_list.appendChild(component.cartItem(x))
   }
 }
@@ -19,7 +19,7 @@ if (verified){
 document.getElementById("product-detail").innerHTML = component.ProductDetail(localStorage.getItem('product'))
 
 //search product
-document.getElementById('form-search').addEventListener('submit', async function (event)  {
+document.getElementById('form-search').addEventListener('submit', async function (event) {
   event.preventDefault();
   try {
     let product_display = document.getElementById('product-display')
@@ -29,9 +29,9 @@ document.getElementById('form-search').addEventListener('submit', async function
       return
     }
     // document.getElementById('loader').setAttribute('style','display:block')
-    
+
     console.log(input)
-    const response = await fetch(constant.PRODUCTS_API+`?search=${input}`);
+    const response = await fetch(constant.PRODUCTS_API + `?search=${input}`);
     console.log("after fetch")
     if (!response.ok) {
       throw new Error("Network response was not OK");
@@ -42,38 +42,37 @@ document.getElementById('form-search').addEventListener('submit', async function
       return
     }
     //clear product display to insert products
-    while(product_display.firstChild)
-      {
-        product_display.removeChild(product_display.firstChild)
-      }
+    while (product_display.firstChild) {
+      product_display.removeChild(product_display.firstChild)
+    }
     // document.getElementById('loader').setAttribute('style','display:none')
-    data.results.forEach(element=>{
+    data.results.forEach(element => {
       product_display.innerHTML += component.card(element)
     })
-    
+
   } catch (error) {
-    alert("There was a problem with your fetch request: "+ error);
+    alert("There was a problem with your fetch request: " + error);
   }
 }
 
 );
 
-document.body.addEventListener('click', async function(event){
-  if (event.target.classList.contains('add-to-cart')){
+document.body.addEventListener('click', async function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
     event.preventDefault();
     let product_id = event.target.getAttribute('data-product-id')
     let quantity = document.getElementById('inputQuantity').value
-    if (quantity){
-      await addToCart(product_id,quantity)
+    if (quantity) {
+      await addToCart(product_id, quantity)
     }
-    else{
-      await addToCart(product_id,1)
+    else {
+      await addToCart(product_id, 1)
     }
-    
+
   }
 });
 
-document.getElementById('logout').addEventListener('click', function(event) {
+document.getElementById('logout').addEventListener('click', function (event) {
   event.preventDefault();
   // localStorage.clear()
   sessionStorage.clear()

@@ -4,6 +4,7 @@ export const ORDER_API = "http://127.0.0.1:8000/api/shop/order/"
 export const LOGIN_API = "http://127.0.0.1:8000/api/login/"
 export const REGISTER_API = "http://127.0.0.1:8000/api/signup/"
 export const VERIFY_API = "http://127.0.0.1:8000/api/verify/"
+export const CHECK_OUT_API = "http://127.0.0.1:8000/api/checkout/"
 export function setCookie(name, value, exp) {
   let expires = "";
   if (exp) {
