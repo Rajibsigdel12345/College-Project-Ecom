@@ -3,12 +3,13 @@ import * as component from './component.js'
 import { verify, setLocal, getCart, addToCart } from './module.mjs'
 const verified = await verify()
 await DisplayProduct()
+const cart_quantity = await getCart(true)
 // window.onload = await verify();
 // window.onload = DisplayProduct();
 let page = 1;
 //load nav bar on top
 let navBar = document.getElementsByTagName('nav')[0]
-navBar.innerHTML = component.nav('index.html', await getCart(true))
+navBar.innerHTML = component.nav('index.html', cart_quantity)
 if (verified) {
   navBar.appendChild(component.cartModal())
   let cart_modal_list = document.getElementById('cart-modal-list')
@@ -98,6 +99,7 @@ document.body.addEventListener('click', async function (event) {
     event.preventDefault();
     let productId = event.target.getAttribute('data-product-id');
     addToCart(productId);
+    navBar.innerHTML = component.nav('index.html', await getCart(true))
   }
 })
 

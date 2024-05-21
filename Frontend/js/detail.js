@@ -68,6 +68,7 @@ document.body.addEventListener('click', async function (event) {
     else {
       await addToCart(product_id, 1)
     }
+    navBar.innerHTML = component.nav('index.html', await getCart(true))
 
   }
 });

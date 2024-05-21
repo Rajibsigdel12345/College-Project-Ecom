@@ -1,6 +1,6 @@
 import * as constant from './constants.js'
 import * as component from './component.js'
-import { verify, setLocal, getCart, addToCart } from './module.mjs'
+import { verify, setLocal, getCart } from './module.mjs'
 const verified = await verify()
 if (!verified) {
   window.location.replace("login.html");
@@ -57,7 +57,8 @@ document.body.addEventListener('click', async function (event) {
         'Authorization': 'Bearer ' + constant.getCookie('access_token')
       }
     })
-    console.log(response)
+    console.log(response.json())
+    navBar.innerHTML = component.nav('index.html', await getCart(true))
   }
 })
 
