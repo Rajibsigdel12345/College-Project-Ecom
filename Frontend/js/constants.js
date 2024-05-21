@@ -6,6 +6,7 @@ export const LOGIN_API = "https://college-project-ecom.onrender.com/api/login/"
 export const REGISTER_API = "https://college-project-ecom.onrender.com/api/signup/"
 export const VERIFY_API = "https://college-project-ecom.onrender.com/api/verify/"
 export const CHECK_OUT_API = "https://college-project-ecom.onrender.com/api/checkout/"
+export const SIGNUP_API = "https://college-project-ecom.onrender.com/api/signup/"
 //local endpo
 // export const PRODUCTS_API = "http://127.0.0.1:8000/api/shop/products/"
 // export const CART_API = "http://127.0.0.1:8000/api/shop/cart/"

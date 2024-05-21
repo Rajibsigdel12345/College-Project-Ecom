@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager, User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
 from django.db import models
 
 # Create your models here.
@@ -11,6 +11,7 @@ class ProductCategoryChoices(models.TextChoices):
     PANTS = 'pants', "Pants",
     WEARABLES = 'wearables', "Wearables",
     FRUITS = 'fruits', "Fruits",
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, first_name, last_name, password=None):
@@ -42,6 +43,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(max_length=100, unique=True)
@@ -58,13 +60,12 @@ class User(AbstractBaseUser):
     objects = UserManager()
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
-    
+
     def has_module_perms(self, app_label):
         return self.is_superuser
+
     def has_perm(self, perm, obj=None):
         return self.is_superuser
-    
-    
 
 
 class Product(models.Model):
@@ -74,7 +75,7 @@ class Product(models.Model):
     category = models.CharField(
         choices=ProductCategoryChoices.choices, default=ProductCategoryChoices.DEFAULT, max_length=100)
     price = models.FloatField()
-    image_url = models.URLField()
+    image_url = models.URLField(max_length=300)
     quantity = models.IntegerField(default=0)
 
     def __str__(self):
@@ -82,24 +83,31 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE, null=False,related_name="user")
+    user = models.OneToOneField(
+        to=User, on_delete=models.CASCADE, null=False, related_name="user")
+
     def __str__(self):
         return f"{self.user.username}"
 
+
 class CartItem(models.Model):
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, null=False,related_name="product_ref")
-    cart = models.ForeignKey(to=Cart, on_delete=models.CASCADE, null=True,related_name="cart_item")
+    product = models.ForeignKey(
+        to=Product, on_delete=models.CASCADE, null=False, related_name="product_ref")
+    cart = models.ForeignKey(
+        to=Cart, on_delete=models.CASCADE, null=True, related_name="cart_item")
     quantity = models.PositiveIntegerField(default=1)
     add_to_cart = models.BooleanField(default=True)
     # order_placed = models.BooleanField(default=False)
+
     def __str__(self):
-        if len(self.product.name)>2:
+        if len(self.product.name) > 2:
             return f"{self.product.name} x {self.quantity}"
         return f"{self.product.product_id} x {self.quantity}"
 
+
 class Order(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=False)
-    product = models.ManyToManyField(to=Product,related_name="product_order")
+    product = models.ManyToManyField(to=Product, related_name="product_order")
     total_price = models.FloatField(default=0.0)
     order_date = models.DateField(auto_now_add=True)
     order_time = models.TimeField(auto_now_add=True)

@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    "default": dj_database_url.parse(config("DATABASE_URL"))
 }
 
 # DATABASES = {

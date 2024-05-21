@@ -7,22 +7,18 @@ if (verified) {
 
 document.getElementById('login-form').addEventListener('submit', async function (event) {
   event.preventDefault(); // Prevent the form from being submitted normally
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
+  const email = document.getElementById('email').value;
+  const first_name = document.getElementById('first_name').value;
+  const last_name = document.getElementById('last_name').value;
   try {
-    let body;
-    if (emailRegex.test(username)) {
-      body = JSON.stringify({ email: username, password: password })
-    } else {
-      body = JSON.stringify({ username: username, password: password })
-    }
-    const response = await fetch(constant.LOGIN_API, {
+    const response = await fetch(constant.SIGNUP_API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: body
+      body: JSON.stringify({ email: email, first_name: first_name, last_name: last_name, username: username, password: password })
     });
 
 
