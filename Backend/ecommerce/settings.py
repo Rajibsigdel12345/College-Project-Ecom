@@ -14,7 +14,6 @@ import dj_database_url
 import datetime
 from pathlib import Path
 from decouple import config
-import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +29,8 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "college-project-ecom.onrender.com"]
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = [config("API_HOST"),]
 
 
 # Application definition
@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     "django_filters",
 ]
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=40),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7)
 }
 
 MIDDLEWARE = [
@@ -64,9 +65,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:5500', "http://127.0.0.1:5500", "https://rajibsigdel.netlify.app"
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
+#     config("FRONTEND_URL1")
+# )
+CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1")
+                         )
 
 ROOT_URLCONF = 'ecommerce.urls'
 

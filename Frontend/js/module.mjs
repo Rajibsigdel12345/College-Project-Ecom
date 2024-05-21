@@ -35,6 +35,41 @@ export function setLocal(key, kwargs) {
   localStorage.setItem(key, JSON.stringify(kwargs))
 }
 
+export async function DisplayProduct(page = 1, filter = null) {
+  let product_display = document.getElementById('product-display')
+  document.getElementById('loader').setAttribute('style', 'display:inline-block')
+  product_display.innerHTML = ""
+  try {
+    const response = await fetch(constant.PRODUCTS_API + `?page=${page}`);
+    if (!response.ok) {
+      throw new Error("Network response was not OK");
+    }
+    document.getElementById('loader').setAttribute('style', 'display:none')
+    const data = await response.json();
+    console.log(data)
+    data.results.forEach(element => {
+      let product_card = component.card(element)
+      product_display.innerHTML += product_card
+
+    })
+    if (!data.next) {
+      document.getElementById('next-button').classList.add('disabled');
+    } else {
+      document.getElementById('next-button').classList.remove('disabled');
+    }
+
+    if (!data.previous) {
+      document.getElementById('previous-button').classList.add('disabled');
+    } else {
+      document.getElementById('previous-button').classList.remove('disabled');
+    }
+
+  }
+  catch (error) {
+    alert("There was a problem with your fetch request: " + error);
+  }
+}
+
 export async function getCart(count = true) {
   try {
     const response = await fetch(constant.CART_API, {
