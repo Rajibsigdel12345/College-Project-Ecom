@@ -149,7 +149,7 @@ export function checkout(cart_item) {
     options += `<option value="${i}" ${i === cart_item.quantity ? 'selected' : ''}>${i}</option>`;
   }
   // let checkout_element = document.createElement('div')
-  let checkout_item = `<div class="card border shadow-none">
+  let checkout_item = `<div id = "checkout-${cart_item.id}"class="card border shadow-none">
   <div class="card-body">
   <div class="d-flex align-items-start border-bottom pb-3">
   <div class="me-4">

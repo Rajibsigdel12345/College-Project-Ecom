@@ -46,6 +46,8 @@ document.body.addEventListener('click', async function (event) {
     event.preventDefault();
     let product_id = event.target.getAttribute('data-product-id')
     // alert(product_id)
+    // console.log(`checkout-${product_id}`)
+    document.getElementById(`checkout-${product_id}`).remove()
     let response = await fetch(constant.CART_API + `${product_id}`, {
       method: 'DELETE',
       headers: {
