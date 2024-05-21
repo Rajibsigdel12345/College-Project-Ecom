@@ -4,15 +4,18 @@ import { verify, getCart, addToCart } from './module.mjs'
 const verified = await verify();
 
 //load nav bar on top
-let navBar = document.getElementsByTagName('nav')[0]
-navBar.innerHTML = component.nav('detail.html', await getCart(true))
-if (verified) {
-  navBar.appendChild(component.cartModal())
+async function render_nav(navBar) {
+  navBar.innerHTML += component.cartModal()
   let cart_modal_list = document.getElementById('cart-modal-list')
   let cart_item = await getCart(false)
   for (let x of cart_item) {
-    cart_modal_list.appendChild(component.cartItem(x))
+    cart_modal_list.innerHTML += component.cartItem(x)
   }
+}
+let navBar = document.getElementsByTagName('nav')[0]
+navBar.innerHTML = component.nav('detail.html', await getCart(true))
+if (verified) {
+  await render_nav(navBar)
 }
 
 // display products
@@ -69,7 +72,7 @@ document.body.addEventListener('click', async function (event) {
       await addToCart(product_id, 1)
     }
     navBar.innerHTML = component.nav('index.html', await getCart(true))
-
+    await render_nav(navBar)
   }
 });
 

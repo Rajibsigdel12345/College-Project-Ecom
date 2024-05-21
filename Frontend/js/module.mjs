@@ -1,4 +1,5 @@
 import * as constant from './constants.js';
+import * as component from './component.js';
 export async function verify() {
   let token = constant.getCookie('access_token')
   if (token) {
@@ -129,5 +130,14 @@ export async function checkOut() {
   }
   catch (error) {
     alert("There was a problem with your fetch request: " + error);
+  }
+}
+
+export async function render_nav(navBar) {
+  navBar.innerHTML += component.cartModal()
+  let cart_modal_list = document.getElementById('cart-modal-list')
+  let cart_item = await getCart(false)
+  for (let x of cart_item) {
+    cart_modal_list.innerHTML += component.cartItem(x)
   }
 }

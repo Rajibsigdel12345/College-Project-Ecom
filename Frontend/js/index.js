@@ -1,6 +1,6 @@
 import * as constant from './constants.js'
 import * as component from './component.js'
-import { verify, setLocal, getCart, addToCart } from './module.mjs'
+import { verify, setLocal, getCart, addToCart, render_nav } from './module.mjs'
 const verified = await verify()
 await DisplayProduct()
 const cart_quantity = await getCart(true)
@@ -11,12 +11,7 @@ let page = 1;
 let navBar = document.getElementsByTagName('nav')[0]
 navBar.innerHTML = component.nav('index.html', cart_quantity)
 if (verified) {
-  navBar.appendChild(component.cartModal())
-  let cart_modal_list = document.getElementById('cart-modal-list')
-  let cart_item = await getCart(false)
-  for (let x of cart_item) {
-    cart_modal_list.appendChild(component.cartItem(x))
-  }
+  await render_nav(navBar)
 }
 
 // display products
@@ -100,6 +95,7 @@ document.body.addEventListener('click', async function (event) {
     let productId = event.target.getAttribute('data-product-id');
     addToCart(productId);
     navBar.innerHTML = component.nav('index.html', await getCart(true))
+    await render_nav(navBar)
   }
 })
 

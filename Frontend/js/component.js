@@ -105,7 +105,7 @@ export function ProductDetail(element) {
 
 export function cartModal() {
   // console.log(cart_item)
-  let modal_element = document.createElement('div')
+  // let modal_element = document.createElement('div')
   let modal = `<div class="modal fade" id="cartModal"  role="dialog" aria-labelledby="cartModalLabel" >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -126,11 +126,11 @@ export function cartModal() {
       </div>
     </div>
   </div>`
-  modal_element.innerHTML = modal
-  return modal_element.firstChild
+  // modal_element.innerHTML = modal
+  return modal
 }
 export function cartItem(cart_item) {
-  let cart_item_element = document.createElement('div')
+  // let cart_item_element = document.createElement('div')
   let item = `<li class="list-group-item d-flex justify-content-between align-items-center">
     <div>
       <img src ="${cart_item.product.image_url}" height="10%" width="10%"><span class = "mx-2">${cart_item.product.name}</sapn>
@@ -138,8 +138,8 @@ export function cartItem(cart_item) {
       <span class="badge bg-dark badge-pill">${cart_item.quantity}</span>
     
     </li>`
-  cart_item_element.innerHTML = item
-  return cart_item_element.firstChild
+  // cart_item_element.innerHTML = item
+  return item
 }
 
 export function checkout(cart_item) {
@@ -148,7 +148,7 @@ export function checkout(cart_item) {
   for (let i = 1; i <= product_quantity; i++) {
     options += `<option value="${i}" ${i === cart_item.quantity ? 'selected' : ''}>${i}</option>`;
   }
-  let checkout_element = document.createElement('div')
+  // let checkout_element = document.createElement('div')
   let checkout_item = `<div class="card border shadow-none">
   <div class="card-body">
   <div class="d-flex align-items-start border-bottom pb-3">
@@ -206,8 +206,8 @@ export function checkout(cart_item) {
   </div>
   </div>
   </div>`
-  checkout_element.innerHTML = checkout_item
-  return checkout_element.firstChild
+  // checkout_element.innerHTML = checkout_item
+  return checkout_item
 }
 
 export function orderSummary(cart_item = null) {
@@ -216,7 +216,8 @@ export function orderSummary(cart_item = null) {
   for (let x of cart_item) {
     total_amount += x.quantity * x.product.price
   }
-  let vat = Number((0.13 * total_amount).toFixed(2))
+  total_amount = Math.round(total_amount * 1000) / 1000
+  let vat = Math.round((130 * total_amount / 1000)) * 1000
   let summary = `<div class="mt-5 mt-lg-0">
   <div class="card border shadow-none">
       <div class="card-header bg-transparent border-bottom py-3 px-4">
