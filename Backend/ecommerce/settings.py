@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import dj_database_url
 from ctypes import cast
 import datetime
 from pathlib import Path
 from decouple import config
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
 ]
-SIMPLE_JWT = { 
+SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=40),
 }
 
@@ -64,7 +66,7 @@ MIDDLEWARE = [
 ]
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:5500',"http://127.0.0.1:5500"
+    'http://localhost:5500', "http://127.0.0.1:5500"
 )
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -90,6 +92,10 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+DATABASES = {
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 DATABASES = {
     'default': {
