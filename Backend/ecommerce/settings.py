@@ -69,7 +69,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 #     'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
 #     config("FRONTEND_URL1")
 # )
-CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1")
+CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1"), config("FRONTEND_URL3"), config("FRONTEND_URL4")
                          )
 
 ROOT_URLCONF = 'ecommerce.urls'
