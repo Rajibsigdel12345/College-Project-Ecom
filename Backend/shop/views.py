@@ -221,10 +221,11 @@ class OrderApiView(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = [OrderFilterSet]
 
-    def get(self, request, *args, **kwargs):
-        if kwargs.get('pk'):
+    def get(self, request,pk = None ,*args, **kwargs):
+        if pk:
+            print(pk)
             order = get_object_or_404(
-                Order, user=request.user, id=kwargs['pk'])
+                Order, user=request.user, id=pk)
             serializer = OrderDetailSerializer(order)
             return Response(serializer.data, status=status.HTTP_200_OK)
         orders = Order.objects.filter(user=request.user)
