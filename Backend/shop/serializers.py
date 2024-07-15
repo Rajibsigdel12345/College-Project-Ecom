@@ -131,7 +131,6 @@ class OrderDetailSerializer(ModelSerializer):
             "id": {"read_only": True},
             "user": {"read_only": True},
         }
-
 class OrderSerializer(ModelSerializer):
     class Meta:
         model = Order

@@ -20,7 +20,6 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -30,8 +29,8 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
-# ALLOWED_HOSTS = [config("API_HOST"),]
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = [config("API_HOST"),]
 
 
 # Application definition
@@ -66,12 +65,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
-    config("FRONTEND_URL1")
-)
-# CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1"), config("FRONTEND_URL3"), config("FRONTEND_URL4")
-#                          )
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
+#     config("FRONTEND_URL1")
+# )
+CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1"), config("FRONTEND_URL3"), config("FRONTEND_URL4")
+                         )
 
 ROOT_URLCONF = 'ecommerce.urls'
 
