@@ -11,7 +11,7 @@ services:
         API_HOST: ${API_HOST}
         FRONTEND_URL1: ${FRONTEND_URL1}
         FRONTEND_URL2: ${FRONTEND_URL2}
-    image: "${DOCKER_USERNAME}/ecommerce:latest"
+    image: YOUR_IMAGE_NAME
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
