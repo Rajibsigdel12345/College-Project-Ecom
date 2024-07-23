@@ -20,9 +20,9 @@ services:
       - FRONTEND_URL1=${FRONTEND_URL1}
       - FRONTEND_URL2=${FRONTEND_URL2}
     volumes:
-      - new_volume:/app
+      - .:/app
     ports:
-      - 8000: 8000
+      - "8000:8000"
     
 volumes:
   new_volume:
