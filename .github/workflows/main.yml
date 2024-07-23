@@ -29,3 +29,18 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/ecommerce:latest
+          secrets: |
+            SECRET_KEY
+            DEBUG
+            DATABASE_URL
+            API_HOST
+            FRONTEND_URL1
+            FRONTEND_URL2
+          build-args: |
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+            DEBUG: ${{ vars.DEBUG }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            API_HOST: ${{ secrets.API_HOST }}
+            FRONTEND_URL1: ${{ secrets.FRONTEND_URL1 }}
+            FRONTEND_URL2: ${{ secrets.FRONTEND_URL2 }}
+            
