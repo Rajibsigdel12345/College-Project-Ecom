@@ -27,12 +27,12 @@ jobs:
       - name: Update docker-compose.yml
         working-directory: './Backend'
         run: |
-          sed -i "s/YOUR_IMAGE_NAME/${{ vars.DOCKER_USERNAME }}\/ecommerce:latest/g" docker-compose.yml
-          sed -i "s/YOUR_SECRET_KEY/${{ secrets.SECRET_KEY }}/g" docker-compose.yml
-          sed -i "s/YOUR_DATABASE_URL/${{ secrets.DATABASE_URL }}/g" docker-compose.yml
-          sed -i "s/YOUR_API_HOST/${{ secrets.API_HOST }}/g" docker-compose.yml
-          sed -i "s/YOUR_FRONTEND_URL1/${{ secrets.FRONTEND_URL1 }}/g" docker-compose.yml
-          sed -i "s/YOUR_FRONTEND_URL2/${{ secrets.FRONTEND_URL2 }}/g" docker-compose.yml
+          sed -i "s|YOUR_IMAGE_NAME|${{ vars.DOCKER_USERNAME }}/ecommerce:latest|g" docker-compose.yml
+          sed -i "s|YOUR_SECRET_KEY|${{ secrets.SECRET_KEY }}|g" docker-compose.yml
+          sed -i "s|YOUR_DATABASE_URL|${{ secrets.DATABASE_URL }}|g" docker-compose.yml
+          sed -i "s|YOUR_API_HOST|${{ secrets.API_HOST }}|g" docker-compose.yml
+          sed -i "s|YOUR_FRONTEND_URL1|${{ secrets.FRONTEND_URL1 }}|g" docker-compose.yml
+          sed -i "s|YOUR_FRONTEND_URL2|${{ secrets.FRONTEND_URL2 }}|g" docker-compose.yml
 
       - name: Build and push Docker images
         working-directory: './Backend'
