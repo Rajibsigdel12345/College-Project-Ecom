@@ -5,8 +5,8 @@ on:
     branches:
       - docker
     paths:
-      - 'Backend/**'
-      
+      - '/Backend/**'
+
 
 jobs:
   build:
