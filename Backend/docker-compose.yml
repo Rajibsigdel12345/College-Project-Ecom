@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      volumes:
-        - new_volume:/app
       args:
         SECRET_KEY: ${SECRET_KEY}
         DEBUG: ${DEBUG}
@@ -21,6 +19,11 @@ services:
       - API_HOST=${API_HOST}
       - FRONTEND_URL1=${FRONTEND_URL1}
       - FRONTEND_URL2=${FRONTEND_URL2}
+    volumes:
+      - new_volume:/app
+    ports:
+      - 8000: 8000
+    
 volumes:
   new_volume:
 # The commented out section below is an example of how to define a PostgreSQL
