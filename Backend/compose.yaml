@@ -12,23 +12,12 @@ services:
     build:
       context: .
     ports:
-      - 9000:9000
-    env_file:
-      - .env
+      - 8000:8000
     volumes:
-      - my_volume:/app/data
-    develop:
-      watch:
-        - path: ./app/package.json
-          action: rebuild
-        - path: ./app
-          target: /usr/src/app
-          action: sync
-
-
+      - .:/app
+      - new_volume:/data
 volumes:
-  my_volume:
-
+  new_volume:
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
