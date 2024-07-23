@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - docker
-    paths:
-      - 'Backend/**'
 
 jobs:
   build:
