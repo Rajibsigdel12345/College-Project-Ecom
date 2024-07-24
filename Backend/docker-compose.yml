@@ -11,7 +11,7 @@ services:
         API_HOST: ${API_HOST}
         FRONTEND_URL1: ${FRONTEND_URL1}
         FRONTEND_URL2: ${FRONTEND_URL2}
-    image: YOUR_IMAGE_NAME
+    image: razevesigdel/ecommerce:latest
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
@@ -19,11 +19,8 @@ services:
       - API_HOST=${API_HOST}
       - FRONTEND_URL1=${FRONTEND_URL1}
       - FRONTEND_URL2=${FRONTEND_URL2}
-    command: >
-      sh -c "python3 manage.py migrate &&
-             uvicorn ecommerce.asgi:application --host 0.0.0.0 --port 8000"
     volumes:
-      - new_volume:/app
+      - new_volume:/app/data
     ports:
       - "8000:8000"
 

@@ -32,7 +32,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
 COPY . /app/
-
+COPY db.sqlite3 /data/
 # Run Django management commands
 RUN python3 manage.py collectstatic --noinput
 RUN python3 manage.py makemigrations
