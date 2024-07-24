@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import dj_database_url
 import datetime
 from pathlib import Path
-from decouple import config
+from decouple import config,Csv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +30,7 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 DEBUG = config("DEBUG", cast=bool)
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
-ALLOWED_HOSTS = [config("API_HOST"),]
+ALLOWED_HOSTS = config("API_HOST" , cast = Csv())
 
 
 # Application definition
