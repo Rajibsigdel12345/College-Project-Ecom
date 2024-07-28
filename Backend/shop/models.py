@@ -11,6 +11,7 @@ class ProductCategoryChoices(models.TextChoices):
     PANTS = 'pants', "Pants",
     WEARABLES = 'wearables', "Wearables",
     FRUITS = 'fruits', "Fruits",
+    SOCCES_JERSEY = 'Soccer Jersey', "Soccer Jersey",
 
 
 class UserManager(BaseUserManager):
