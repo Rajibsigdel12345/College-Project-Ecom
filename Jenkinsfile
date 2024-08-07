@@ -22,8 +22,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose down'
-                    sh 'docker-compose up -d'
+                    if (isUnix()) {
+                        sh 'nohup docker-compose down && nohup docker-compose up -d &'
+                    } else {
+                        bat 'docker-compose down'
+                        bat 'start /b docker-compose up -d'
+                    }
                 }
             }
         }
